@@ -1,6 +1,8 @@
 .DEFAULT_GOAL = help
 SHELL=bash
 
+TAG=nightly-2020-09-18
+
 require-%:
 	if [ "${${*}}" = "" ]; then \
 	        @echo "ERROR: Environment variable not set: \"$*\""; \
@@ -9,7 +11,20 @@ require-%:
 
 ## Docker build
 build:
-	docker image build . -f Dockerfile -t nightly-2020-09-18
+	docker image build . -f Dockerfile -t $(TAG)
+
+## Github docker login
+login:
+	docker login https://ghcr.io
+
+## Push to Github docker regitry
+push: require-VERSION
+	docker tag $(TAG) ghcr.io/psibi/stack-docker/$(TAG):$(VERSION)
+	docker push ghcr.io/psibi/stack-docker/$(TAG):$(VERSION)
+
+## Pull
+pull:
+	docker pull ghcr.io/psibi/stack-docker/$(TAG):1.0
 
 ## Show help screen.
 help:
