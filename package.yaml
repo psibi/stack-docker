@@ -1,0 +1,7 @@
+name: test
+version: '0.1.0'
+executables:
+  test:
+    main: Main.hs
+    dependencies:
+    - base
