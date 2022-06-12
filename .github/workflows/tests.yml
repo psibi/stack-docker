@@ -44,3 +44,7 @@ jobs:
           ghc --version
 
           which ghc
+
+          rm -rf ~/.ghcup
+
+          ghc --version
